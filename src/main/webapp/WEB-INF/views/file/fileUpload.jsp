@@ -8,7 +8,7 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-
+	<h2>단일파일</h2>
 	<form action="fileUpload" method="post" enctype="multipart/form-data">
 		<input type="text" name="name">
 		<input type="file" name="f1">
@@ -17,6 +17,7 @@
 	</form>
 	
 	<hr>
+	<h2>다중파일</h2>
 	
 	<form action="multiFileUpload" method="post" enctype="multipart/form-data">
 		<input type="text" name="name">
@@ -27,6 +28,7 @@
 	</form>
 	
 	<hr>
+	<h2>파라미터 이름이 같은 다중파일</h2>
 	
 	<form action="sameMultiFileUpload" method="post" enctype="multipart/form-data">
 		<input type="text" name="name">
@@ -36,6 +38,7 @@
 	
 	</form>
 	<hr>
+	<h2>파라미터 이름도 모르고 갯수도 모르는 파일</h2>
 	<form action="upload" method="post" enctype="multipart/form-data">
 		<input type="text" name="name">
 		<div id="file">
