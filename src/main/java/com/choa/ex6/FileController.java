@@ -1,14 +1,20 @@
 package com.choa.ex6;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.choa.file.FileDTO;
+import com.choa.file.FileService;
 import com.choa.file.MultiFileDTO;
 import com.choa.file.SameMultiFileDTO;
 
@@ -16,11 +22,33 @@ import com.choa.file.SameMultiFileDTO;
 @RequestMapping(value="/file/**")
 public class FileController {
 	
+	
+	//파일 삭제 
+	@RequestMapping(value="fileDelete",method=RequestMethod.GET)
+	public void fileDelete(String fileName, HttpSession session)throws Exception{
+		FileService f = new FileService();
+		f.fileDelete(fileName, session);
+		
+	}
+	
 	@RequestMapping(value="fileUpload", method=RequestMethod.GET)
 	public void fileUpload(){		
 	}
 	//다중 파일 업로드 -파라미터 이름을 모르거나 갯수가 유동적일때
-	
+	@RequestMapping(value="upload", method=RequestMethod.POST)	
+	public void upload(MultipartHttpServletRequest request){
+		
+		Iterator<String> it=request.getFileNames();
+		ArrayList<MultipartFile> muti = new ArrayList<MultipartFile>();
+		while (it.hasNext()){
+			MultipartFile m = request.getFile(it.next());
+			muti.add(m);			
+		}
+		for(MultipartFile m : muti){
+			System.out.println(m.getOriginalFilename());
+		}
+		
+	}
 	
 	
 	//다중 파일 업로드 -파라미터 이름이 같을때 
@@ -66,9 +94,21 @@ public class FileController {
 	}
 	
 	//단일 파일 업로드
+	
+	public void fileUpload(MultipartHttpServletRequest request){	}	
+	
 	@RequestMapping(value="fileUpload", method=RequestMethod.POST)
-	public void fileUpload(MultipartHttpServletRequest request){	}		
-	public void fileUpload(MultipartFile f1){	}
+	public ModelAndView fileUpload(MultipartFile f1, HttpSession session)throws Exception{	
+		
+		FileService fileService = new FileService();
+		String fileName=fileService.fileSave(f1, session);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("file/fileView");
+		mv.addObject("fileName", fileName);
+		mv.addObject("oname", f1.getOriginalFilename());
+		return mv;
+		
+	}
 	
 	public void fileUpload(FileDTO fileDTO){	}
 

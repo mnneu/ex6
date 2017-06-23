@@ -47,12 +47,20 @@
 	</form>
 	<script type="text/javascript">
 		var i = 0;
+		
 		$("#add").click(function(){
 			if(i<5){
 			i++;
-			var data = '<p title="'+i+'"><input type="file" name="f1"><span id="'+i+'" class="delete">X</span></p>';
+			var data = '<p class="test"><input type="file" name="f'+i+'"><span class="delete">X</span></p>';
 			$("#file").append(data);
+			}else{
+				alert("최대 5개 까지 가능");
 			}
+		});
+		$("#file").on("click",".delete",function(){
+
+			$(this).parent().remove();
+			i--;
 		});
 		
 		
