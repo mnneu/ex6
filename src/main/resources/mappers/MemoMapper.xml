@@ -3,13 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="NoticeMapper">
+  <mapper namespace="MemoMapper">   
+  
   
   <sql id="search">
   <trim prefix="where" prefixOverrides="and || or">
-  		<if test="search == 'title'">
-  			title like '%'||#{find}||'%'
-  		</if>
+  		
   		<if test="search == 'writer'">
   			 writer like '%'||#{find}||'%'
   		</if>
@@ -20,33 +19,33 @@
   </sql>
   
   	<select id="count" resultType="java.lang.Integer" parameterType="com.choa.util.ListInfo">
-  		select count(nvl(num,0)) from notice
+  		select count(nvl(num,0)) from memo2
   		<include refid="search"/>
   		
   	</select>
   
-  	<select id="list" resultType="NoticeDTO" parameterType="com.choa.util.ListInfo">
+  	<select id="list" resultType="com.choa.memo.MemoDTO" parameterType="com.choa.util.ListInfo">
   		select * from 
   		(select rownum r, n.* from 
-  		(select * from notice 
+  		(select * from memo2 
   		<include refid="search"/>
   		order by num desc) n)
   		where r between #{startRow} and #{lastRow}
   	</select>
   
-  	<select id="view" resultType="NoticeDTO" parameterType="java.lang.Integer">
-  		select * from notice where num=#{num}
-  	</select> 	  
-  	<insert id="write" parameterType="NoticeDTO">
-  		insert into notice values (notice_seq.nextval,#{writer},#{title},#{contents},sysdate, 0)
+  	  
+  	<insert id="write" parameterType="com.choa.memo.MemoDTO">
+  		insert into memo2 values (notice_seq.nextval,#{writer},#{contents},sysdate)
   	</insert>
+  	
   	<delete id="delete" parameterType="java.lang.Integer">
-  		delete notice where num=#{num}
+  		delete memo2 where num=#{num}
   	</delete>
-  	<update id="update" parameterType="NoticeDTO">
-  		update notice set title=#{title},contents=#{contents} where num=#{num}
+  	<update id="update" parameterType="com.choa.memo.MemoDTO">
+  		update memo2 set contents=#{contents} where num=#{num}
   	</update>
   	
   	<!-- resultType 을 미리 알고있기 때문에 안써줘도됨 -->
+  	
   
   </mapper>
