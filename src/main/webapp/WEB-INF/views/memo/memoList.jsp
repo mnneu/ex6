@@ -22,6 +22,29 @@
 </script>
 </head>
 <body>
+	<form>
+ <fieldset>
+  <legend>납품자정보</legend>
+  1. 납품자명: <input type="text" placeholder="name"><br>
+  2. Email: <input type="email" placeholder="answs@naver.com"><br>
+  3. 홈페이지: <input type="url" placeholder="http://">
+ </fieldset>
+</form>
+<form>
+ <fieldset>
+  <legend>납품정보</legend>
+   <ul>
+   	<li>상품명: <input list="qq"><datalist id="qq"><option label="도그1004">dog1004</option><option label="고양이치킨">catchicken</option><option label="우유">milk</option></datalist><br></li>
+   	<li>납품수량: <input type="number" step="10" min="10" max="100" placeholder="최소10이상" ><br></li>
+   	<li>납품등급: <input type="range" min="0" max="10" step="2" ><br></li>
+   	<li>기타사항: <textarea rows="" cols=""></textarea> <br></li>
+   </ul>
+  
+ </fieldset>
+</form>
+	
+
+
 	<div>
 		<form action="">
 			<p><input type="text" id="writer"></p>
